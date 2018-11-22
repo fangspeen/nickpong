@@ -33,7 +33,18 @@ public class BallController : MonoBehaviour
 
     void PositionClamp()
     {
+        //this could be the source of the ball ending up ontop of paddles...
         gameObject.transform.position = new Vector3(Mathf.Clamp(gameObject.transform.position.x, MinXClamp, MaxXClamp), Mathf.Clamp(gameObject.transform.position.y, MinYClamp, MaxYClamp), gameObject.transform.position.z);
+        if(gameObject.transform.position.x == MaxXClamp || gameObject.transform.position.y == MinXClamp)
+        {
+            gameObject.transform.position = new Vector3(0, 0, 0);
+            Debug.Log("red scored against blue");
+        }
+        else if(gameObject.transform.position.x == MaxYClamp || gameObject.transform.position.y == MinYClamp)
+        {
+            gameObject.transform.position = new Vector3(0, 0, 0);
+            Debug.Log("blue scored against red");
+        }
     }
 
     // called when the cube hits the floor
@@ -47,9 +58,9 @@ public class BallController : MonoBehaviour
         Debug.Log(string.Format("{0} transform:{1} velocity:{2} angularVelocity:{3}", collision.otherRigidbody.name, collision.otherRigidbody.transform, collision.otherRigidbody.velocity, collision.otherRigidbody.angularVelocity));
 
         if (collision.rigidbody.name == "TopSide" || collision.rigidbody.name == "BottomSide")
-            relativeSpeed.x *= -1;
+            relativeSpeed.x *= -1.1f;
         else
-            relativeSpeed.y *= -1;
+            relativeSpeed.y *= -1.1f;
 
         speed = relativeSpeed;
 
