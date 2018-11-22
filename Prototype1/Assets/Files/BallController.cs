@@ -53,7 +53,7 @@ public class BallController : MonoBehaviour
 
         speed = relativeSpeed;
 
-        if (collision.relativeVelocity.magnitude > 2)
+        //if (collision.relativeVelocity.magnitude > 2)
             audioSource.Play();
     }
 }
